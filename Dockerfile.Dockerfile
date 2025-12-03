@@ -2,9 +2,14 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
+# Copy requirements and install basic deps
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Install PyTorch CPU wheel correctly
+RUN pip install --no-cache-dir torch==2.1.2+cpu -f https://download.pytorch.org/whl/cpu/torch_stable.html
+
+# Copy the rest of the project
 COPY . .
 
 EXPOSE 8000
